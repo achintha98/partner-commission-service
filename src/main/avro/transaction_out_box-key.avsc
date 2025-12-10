@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "Key",
+  "namespace": "transactionDB.public.transaction_out_box",
+  "fields": [
+    {
+      "name": "transaction_id",
+      "type": "long"
+    }
+  ],
+  "connect.name": "transactionDB.public.transaction_out_box.Key"
+}

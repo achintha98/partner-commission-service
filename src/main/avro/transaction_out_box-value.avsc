@@ -1,0 +1,48 @@
+{
+  "type": "record",
+  "name": "Value",
+  "namespace": "transactionDB.public.transaction_out_box",
+  "fields": [
+    {
+      "name": "transaction_id",
+      "type": "long"
+    },
+    {
+      "name": "amount",
+      "type": "double"
+    },
+    {
+      "name": "currency",
+      "type": "string"
+    },
+    {
+      "name": "partner_id",
+      "type": "long"
+    },
+    {
+      "name": "sale_date",
+      "type": {
+        "type": "long",
+        "connect.version": 1,
+        "connect.name": "io.debezium.time.MicroTimestamp"
+      }
+    },
+    {
+      "name": "__op",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "__ts_ms",
+      "type": [
+        "null",
+        "long"
+      ],
+      "default": null
+    }
+  ],
+  "connect.name": "transactionDB.public.transaction_out_box.Value"
+}

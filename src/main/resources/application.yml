@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: billing-service
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9292}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.trusted.packages: "*"
+      spring.json.value.default.type: "org.springframework.batch.integration.partition.StepExecutionRequest"
+    consumer:
+      group-id: batch-workers
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/billing}
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  batch:
+    jdbc:
+      initialize-schema: always
+  data:
+    redis:
+      port: ${REDIS_PORT:8080}
+      host: ${SERVER_HOST:localhost}
+server:
+  port: ${SERVER_PORT:8080}
+logging:
+  level:
+    root: INFO
+    org.springframework.integration: INFO
+    org.springframework.batch: INFO
+    net.javacrumbs.shedlock: INFO
+    org.springframework.data.redis: INFO
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+
