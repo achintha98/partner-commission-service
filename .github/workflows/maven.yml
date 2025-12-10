@@ -33,13 +33,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+          aws-region: us-east-2
   
       - name: Build and push image with Jib
         run: |
           mvn clean compile jib:build \
             -DskipTests \
-            -Djib.to.image=209521792523.dkr.ecr.ap-south-1.amazonaws.com/pm/billing-service:latest
+            -Djib.to.image=209521792523.dkr.ecr.us-east-2.amazonaws.com/pm/billing-service:latest
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
