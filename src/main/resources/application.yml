@@ -15,8 +15,8 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/billing}
-    username: postgres
-    password: password
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:password}
   jpa:
     hibernate:
       ddl-auto: validate
