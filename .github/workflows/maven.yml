@@ -28,18 +28,38 @@ jobs:
           distribution: 'temurin'
           cache: maven
           
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-2
   
-      - name: Build and push image with Jib
+      # - name: Build and push image with Jib
+      #   run: |
+      #     mvn clean compile jib:build \
+      #       -DskipTests \
+      #       -Djib.to.image=209521792523.dkr.ecr.us-east-2.amazonaws.com/pm/billing-service:latest
+
+            # 🔐 Authenticate to GCP
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      # ☁️ Configure gcloud
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: billing-system-481817
+
+      # 🐳 Build & push image using Jib
+      - name: Build and push image to Artifact Registry
         run: |
           mvn clean compile jib:build \
             -DskipTests \
-            -Djib.to.image=209521792523.dkr.ecr.us-east-2.amazonaws.com/pm/billing-service:latest
+            -Djib.to.image=asia-south1-docker.pkg.dev/billing-system-481817/commission-repo/billing-service:latest
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       # - name: Update dependency graph
